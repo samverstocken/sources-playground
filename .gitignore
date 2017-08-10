@@ -5,3 +5,5 @@
 *.pyc
 output_find/
 output_extract/
+extended_sources.dat
+point_sources.dat
