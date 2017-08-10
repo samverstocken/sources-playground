@@ -11,6 +11,8 @@ dec   = 5.28824
 d25   = 0.42657951411792816
 redshift = 0.1694
 
+output_find_name = "output_find"
+output_extract_name = "output_extract"
 
 
 ## Create the catalog
@@ -42,7 +44,7 @@ finder.config.find_other_sources = True
 #finder.config.point_sources_catalog = ...
 
 # Set the output directory
-finder.config.output = 'output_find/'
+finder.config.output = output_find_name
 
 # Set options for extended sources, point sources and other sources
 # For extended source options: see 'definition' in pts.magic.config.find_extended.py
@@ -76,7 +78,7 @@ finder.run(frames=dict([(name, frame)]), extended_source_catalog=catalog)
 
 # Start source extraction
 extractor = SourceExtractor()
-extractor.config.input = 'output_find/'
-extractor.config.output = 'output_extract/'
+extractor.config.input = output_find_name
+extractor.config.output = output_extract_name
 
 extractor.run(frame=frame, name=name)

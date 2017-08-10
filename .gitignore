@@ -1,0 +1,7 @@
+*.html
+.idea
+*~
+.DS_Store
+*.pyc
+output_find/
+output_extract/
