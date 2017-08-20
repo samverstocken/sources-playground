@@ -4,6 +4,9 @@ from pts.magic.core.image import Image
 from pts.magic.sources.finder import SourceFinder
 from pts.magic.catalog.extended import ExtendedSourceCatalog
 from pts.magic.sources.extractor import SourceExtractor
+from pts.core.basics.log import setup_log
+
+setup_log("DEBUG")
 
 name  = '1237678777941229794'
 ra    = 0.00945
@@ -29,7 +32,16 @@ catalog.add_entry(name=name, ra=ra, dec=dec, z=redshift, galtype=None, alternati
 ## Create the instance
 finder = SourceFinder()
 
+# CATALOGS
+finder.config.point.fetching.catalogs = ["NOMAD"]
+
+finder.config.point.fetching.min_distance_from_galaxy.principal = 10. # default = 20
+finder.config.point.fetching.min_distance_from_galaxy.companion = 5. # default = 15
+finder.config.point.fetching.min_distance_from_galaxy.other = 3.  # default = 15
+
 ## Configuration settings: can be adapted as preferred
+
+finder.config.point.saturation.deblend = True
 
 # Multiprocessing is quite unstable
 finder.config.nprocesses = 1
@@ -80,5 +92,7 @@ finder.run(frames=dict([(name, frame)]), extended_source_catalog=catalog)
 extractor = SourceExtractor()
 extractor.config.input = output_find_name
 extractor.config.output = output_extract_name
+
+extractor.config.remove_companions = True
 
 extractor.run(frame=frame, name=name)
